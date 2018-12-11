@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#0d47a1</color>
+    <color name="colorPrimaryDark">#1a237e</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorGreenDarnerTail">#0d47a1</color>
+    <color name="colorGreenDarnerTailWithAlpha">#970d47a1</color>
+    <color name="colorWhite">#FFF</color>
+    <color name="colorWhiteTransparent">#22ffffff</color>
+    <color name="colorTextDefault">#707070</color>
+    <color name="colorBlack">#000</color>
+</resources>
