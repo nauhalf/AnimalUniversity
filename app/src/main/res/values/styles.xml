@@ -1,14 +1,14 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="CustomToolbar" parent="ThemeOverlay.AppCompat.ActionBar">
+    <style name="CustomToolbar" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorWhite</item>
         <item name="android:textColorHint">@color/colorWhiteTransparent</item>
         <item name="android:editTextColor">@color/colorWhite</item>
@@ -18,7 +18,7 @@
         <item name="android:textAllCaps">true</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#707070</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
 
@@ -26,7 +26,7 @@
         <item name="android:textAlignment">center</item>
         <item name="android:textSize">@dimen/ipk_size</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:textColor">#707070</item>
+        <item name="android:textColor">@color/colorSecondaryText</item>
     </style>
 
 </resources>

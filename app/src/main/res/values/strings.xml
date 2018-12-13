@@ -3,4 +3,15 @@
     <string name="target_ipk">Target IPK</string>
     <string name="ipk_saya">IPK Saya</string>
     <string name="header">header</string>
+    <string name="login">Login</string>
+    <string name="indeks_prestasi_sementara">Indeks Prestasi Sementara</string>
+    <string name="harap_tunggu">Harap tunggu</string>
+    <string name="error_login">NIM atau password yang anda masukkan salah.</string>
+    <string name="nim_caps">NIM</string>
+    <string name="password">Password</string>
+    <string name="title_activity_gpa">GpaActivity</string>
+    <string name="tambah_ips">Tambah IPS</string>
+    <string name="simpan">Simpan</string>
+    <string name="error_empty">Kolom tidak boleh kosong</string>
+    <string name="range_gpa">Hanya boleh 0 - 4</string>
 </resources>

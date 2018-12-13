@@ -3,4 +3,5 @@
     <dimen name="img_profile_size">100dp</dimen>
     <dimen name="common_padding">24dp</dimen>
     <dimen name="ipk_size">24sp</dimen>
+    <dimen name="placeholderTextHeight">8dp</dimen>
 </resources>
