@@ -39,7 +39,8 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUnivers
                 Gpa.ID_STUDENT to INTEGER,
                 Gpa.SEMESTER to INTEGER,
                 Gpa.VALUE to REAL,
-                Gpa.LOCK to INTEGER)
+                Gpa.LOCK to INTEGER,
+                FOREIGN_KEY(Gpa.ID_STUDENT, Student.TABLE_STUDENT, Student.ID))
 
         seeding(db)
     }
@@ -77,7 +78,7 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUnivers
                 Gpa(null,
                         student1.id,
                         1,
-                        3.8,
+                        3.5,
                         true),
                 Gpa(null,
                         student1.id,
