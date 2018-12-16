@@ -21,7 +21,8 @@ class GpaRepositoryImpl (private val context: Context) : GpaRepository {
     override fun updateGpa(id: Long, value: Double) {
         context.database.use {
             update(Gpa.TABLE_GPA, Gpa.VALUE to value)
-                    .whereArgs("(ID_ = {id})", "id" to id)
+                    .whereArgs("ID_ = {id}", "id" to id)
+                    .exec()
         }
     }
 

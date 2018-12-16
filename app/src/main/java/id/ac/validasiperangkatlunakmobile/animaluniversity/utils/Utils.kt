@@ -4,13 +4,19 @@ import android.content.Context
 import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
+import android.provider.MediaStore
+import android.provider.OpenableColumns
+import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import id.ac.validasiperangkatlunakmobile.animaluniversity.R
 import java.math.BigInteger
 import java.security.MessageDigest
+import java.util.regex.Pattern
 
-fun String.md5() : String {
+
+fun String.md5(): String {
     val md = MessageDigest.getInstance("MD5")
     return BigInteger(1, md.digest(toByteArray())).toString(16).padStart(32, '0')
 }
@@ -63,9 +69,54 @@ fun decodeSampledBitmapFromResource(
         BitmapFactory.decodeResource(res, resId, this)
     }
 }
+
 fun Context.alertLoading(): AlertDialog {
     val dialogBuilder = AlertDialog.Builder(this)
     dialogBuilder.setCancelable(false)
     dialogBuilder.setView(R.layout.progress_bar_loading)
     return dialogBuilder.create()
+}
+
+fun String.isValidEmail() : Boolean{
+    return Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+fun String.isValidPassword() : Boolean {
+    return Pattern.compile("^.{6,}$").matcher(this).matches()
+}
+
+fun String.getUriFromPath(context: Context): Uri {
+    val photoId: Long
+    val photoUri = MediaStore.Images.Media.getContentUri("external")
+    val projection = arrayOf(MediaStore.Images.ImageColumns._ID)
+    val cursor = context.contentResolver.query(photoUri, projection, MediaStore.Images.ImageColumns.DATA + " LIKE ?", arrayOf(this), null)
+    cursor!!.moveToFirst()
+
+    val columnIndex = cursor.getColumnIndex(projection[0])
+    photoId = cursor.getLong(columnIndex)
+
+    cursor.close()
+    return Uri.parse(photoUri.toString() + "/" + photoId)
+}
+
+fun Uri.getFileName(context: Context): String {
+    var result: String? = null
+    if (this.scheme == "content") {
+        val cursor = context.contentResolver.query(this, null, null, null, null)
+        try {
+            if (cursor != null && cursor.moveToFirst()) {
+                result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
+            }
+        } finally {
+            cursor!!.close()
+        }
+    }
+    if (result == null) {
+        result = this.path
+        val cut = result!!.lastIndexOf('/')
+        if (cut != -1) {
+            result = result.substring(cut + 1)
+        }
+    }
+    return result
 }

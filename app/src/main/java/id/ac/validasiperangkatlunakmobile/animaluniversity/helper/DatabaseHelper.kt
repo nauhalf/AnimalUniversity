@@ -4,12 +4,10 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import id.ac.validasiperangkatlunakmobile.animaluniversity.model.entitiy.gpa.Gpa
 import id.ac.validasiperangkatlunakmobile.animaluniversity.model.entitiy.student.Student
-import id.ac.validasiperangkatlunakmobile.animaluniversity.model.repository.student.StudentRepositoryImpl
 import id.ac.validasiperangkatlunakmobile.animaluniversity.utils.md5
 import org.jetbrains.anko.db.*
 
 class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUniversity.db", null, 1) {
-    private val studentRepo: StudentRepositoryImpl = StudentRepositoryImpl(ctx)
 
     companion object {
         private var instance: DatabaseHelper? = null
@@ -29,6 +27,11 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUnivers
                 Student.NIM to TEXT + UNIQUE,
                 Student.PASSWORD to TEXT,
                 Student.NAME to TEXT,
+                Student.FACULTY to TEXT,
+                Student.MAJOR to TEXT,
+                Student.IMAGE to TEXT,
+                Student.EMAIL to TEXT,
+                Student.ADDRESS to TEXT,
                 Student.TARGET_GPA to REAL)
 
         db?.createTable(Gpa.TABLE_GPA, true,
@@ -47,8 +50,26 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUnivers
     }
 
     private fun seeding(db: SQLiteDatabase?) {
-        val student1 = Student(null, "20160801173", "20160801173", "Muhammmad Naufal Fadhillah", null)
-        val student2 = Student(null, "20160801002", "20160801002", "Farla Praditha", null)
+        val student1 = Student(null,
+                "20160801173",
+                "20160801173",
+                "Muhammmad Naufal Fadhillah",
+                "Fakultas Ilmu Komputer",
+                "Teknik Informatika",
+                null,
+                null,
+                null,
+                null)
+        val student2 = Student(null,
+                "20160801002",
+                "20160801002",
+                "Farla Praditha",
+                "Fakultas Ilmu Komputer",
+                "Teknik Informatika",
+                null,
+                null,
+                null,
+                null)
         student1.id = insertStudent(student1, db)
         student2.id = insertStudent(student2, db)
 
@@ -117,13 +138,18 @@ class DatabaseHelper(ctx: Context) : ManagedSQLiteOpenHelper(ctx, "AnimalUnivers
                 Student.NIM to student.nim,
                 Student.PASSWORD to student.password?.md5(),
                 Student.NAME to student.name,
+                Student.FACULTY to student.faculty,
+                Student.MAJOR to student.major,
+                Student.IMAGE to student.image,
+                Student.EMAIL to student.email,
+                Student.ADDRESS to student.address,
                 Student.TARGET_GPA to student.targetGpa)
     }
 
     private fun insertGpa(list: List<Gpa>, db: SQLiteDatabase?) {
         db?.transaction {
             for (gpa: Gpa in list) {
-                db?.insert(Gpa.TABLE_GPA,
+                db.insert(Gpa.TABLE_GPA,
                         Gpa.ID_STUDENT to gpa.id_student,
                         Gpa.SEMESTER to gpa.semester,
                         Gpa.VALUE to gpa.value,

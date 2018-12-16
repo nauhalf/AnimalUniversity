@@ -8,5 +8,7 @@ interface MainView {
     fun showLoading()
     fun hideLoading()
     fun getContext() : Context
-    fun loadData(s : Student, list : List<Gpa>)
+    fun loadData(s : Student, list : List<Gpa>?)
+    fun logout()
+    fun openProfileAcitivty()
 }

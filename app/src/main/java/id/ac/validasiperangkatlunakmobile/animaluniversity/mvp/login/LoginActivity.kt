@@ -50,6 +50,9 @@ class LoginActivity : AppCompatActivity(), LoginView{
 
     override fun showLoginFailDialog() {
         alert(getString(R.string.error_login)){
+            also {
+                ctx.setTheme(R.style.AlertDialogTheme)
+            }
             okButton { dialog ->  dialog.dismiss() }
         }.show()
     }

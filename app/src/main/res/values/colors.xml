@@ -6,7 +6,8 @@
     <color name="colorWhite">#FFF</color>
     <color name="colorWhiteTransparent">#22ffffff</color>
     <color name="colorPrimaryText">#212121</color>
+    <color name="colorDivider">#96212121</color>
+    <color name="colorThirdText">#3d3d3d</color>
     <color name="colorSecondaryText">#757575</color>
-    <color name="colorDrawableEditText">#6D6C6D</color>
     <color name="colorShimmer">#dddddd</color>
 </resources>

@@ -31,12 +31,17 @@ class MainPresenter(private val view: MainView,
                 }
             }
 
-            student.await()?.let { student ->
+            student.await()?.let { s ->
                 gpa.await()?.let {
-                    gpa-> view.loadData(student, gpa)
+                    gpa-> view.loadData(s, gpa)
                 }
             }
             view.hideLoading()
         }
+    }
+
+    fun logout(){
+        pref.setUserLogin(null)
+        view.logout()
     }
 }

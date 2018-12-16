@@ -1,4 +1,4 @@
-package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.addgpa
+package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.gpa
 
 import android.content.Context
 import android.os.Bundle
@@ -7,16 +7,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import com.google.android.material.textfield.TextInputEditText
 import id.ac.validasiperangkatlunakmobile.animaluniversity.R
-import kotlinx.android.synthetic.main.activity_add_gpa.*
+import kotlinx.android.synthetic.main.activity_gpa.*
 import org.jetbrains.anko.sdk27.coroutines.onClick
 
-class AddGpaActivity : AppCompatActivity(), AddGpaView {
-    private var semester: Int? = null
-    private lateinit var presenter: AddGpaPresenter
+class GpaActivity : AppCompatActivity(), GpaView {
+    private lateinit var presenter: GpaPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_gpa)
+        setContentView(R.layout.activity_gpa)
         setUp()
     }
 
@@ -58,24 +57,46 @@ class AddGpaActivity : AppCompatActivity(), AddGpaView {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
-        presenter = AddGpaPresenter(this)
-        semester = intent.getIntExtra("semester", 0)
-        var s = "Semester $semester"
-        txt_add_semester.text = s
+        presenter = GpaPresenter(this)
+        var idGpa: Long? = null
+        val isEdit = intent.getBooleanExtra("isEdit", false)
+        val semester : Int? = intent.getIntExtra("semester", 0)
+        if (!isEdit) {
+            supportActionBar?.title = getString(R.string.tambah_ips_semester)
+        } else {
+            idGpa = intent.getLongExtra("idGpa", 0)
+            edit_gpa.setText(intent.getDoubleExtra("value", 0.0).toString())
+            supportActionBar?.title = getString(R.string.ubah_ips_semester)
+        }
+
+        var s = "IPS Semester $semester"
+        txt_layout_gpa.hint = s
 
         btn_save.onClick {
-            semester?.let {
-                if (presenter.validate(edit_gpa.text.toString())) {
-                    presenter.save(it, edit_gpa.text.toString().toDouble())
+            if(isEdit){
+                idGpa?.let { g1 ->
+                    if(presenter.validate(edit_gpa.text.toString())){
+                        presenter.update(g1, edit_gpa.text.toString().toDouble())
+                    }
+                }
+
+            }
+            else {
+                semester?.let { s1 ->
+                    if (presenter.validate(edit_gpa.text.toString())) {
+                        presenter.insert(s1, edit_gpa.text.toString().toDouble())
+                    }
                 }
             }
+        }
+
+        btn_cancel.onClick {
+            finish()
         }
 
         edit_gpa.setOnFocusChangeListener { v, hasFocus -> if (!hasFocus) presenter.validate((v as TextInputEditText).text.toString()) }
 
     }
-
-
 
 
 }

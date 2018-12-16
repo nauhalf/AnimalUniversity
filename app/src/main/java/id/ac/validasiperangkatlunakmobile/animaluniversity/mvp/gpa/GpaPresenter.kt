@@ -1,6 +1,7 @@
-package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.addgpa
+package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.gpa
 
 import android.app.Activity
+import id.ac.validasiperangkatlunakmobile.animaluniversity.R
 import id.ac.validasiperangkatlunakmobile.animaluniversity.helper.MySharedPreferences
 import id.ac.validasiperangkatlunakmobile.animaluniversity.model.entitiy.gpa.Gpa
 import id.ac.validasiperangkatlunakmobile.animaluniversity.model.repository.gpa.GpaRepository
@@ -15,11 +16,11 @@ import org.jetbrains.anko.okButton
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-class AddGpaPresenter(private val view: AddGpaView,
-                      private val repo: GpaRepository = GpaRepositoryImpl(view.getContext())) {
+class GpaPresenter(private val view: GpaView,
+                   private val repo: GpaRepository = GpaRepositoryImpl(view.getContext())) {
 
     private val pref = MySharedPreferences.init(view.getContext(), AppConstants.PREF_NAME)
-    fun save(semester: Int, value: Double) {
+    fun insert(semester: Int, value: Double) {
         GlobalScope.launch(Dispatchers.Main) {
             var gpa = GlobalScope.async {
                 pref.getUserLogin()?.let {
@@ -27,10 +28,13 @@ class AddGpaPresenter(private val view: AddGpaView,
                 }
             }
             if (gpa.await() != null) {
-                 val result = suspendCoroutine<Int> { it ->
+                val result = suspendCoroutine<Int> { it ->
                     val result = Activity.RESULT_OK
-                    view.getContext().alert("Data berhasil ditambahkan"){
-                        okButton {it2->
+                    view.getContext().alert("Data berhasil ditambahkan") {
+                        also {
+                            ctx.setTheme(R.style.AlertDialogTheme)
+                        }
+                        okButton { it2 ->
                             it2.dismiss()
                             it.resume(result)
                         }
@@ -41,6 +45,29 @@ class AddGpaPresenter(private val view: AddGpaView,
             }
         }
     }
+
+    fun update(id: Long, value: Double) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val gpa = GlobalScope.async {
+                repo.updateGpa(id, value)
+            }
+            gpa.await()
+            val result = suspendCoroutine<Int> { it ->
+                val result = Activity.RESULT_OK
+                view.getContext().alert("Data berhasil diubah") {
+                    also {
+                        ctx.setTheme(R.style.AlertDialogTheme)
+                    }
+                    okButton { it2 ->
+                        it2.dismiss()
+                        it.resume(result)
+                    }
+                }.show()
+            }
+            view.close(result)
+        }
+    }
+
 
     fun validate(s: String): Boolean {
         return if (s.isEmpty()) {

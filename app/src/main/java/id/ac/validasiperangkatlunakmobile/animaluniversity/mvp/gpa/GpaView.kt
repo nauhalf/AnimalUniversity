@@ -1,8 +1,8 @@
-package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.addgpa
+package id.ac.validasiperangkatlunakmobile.animaluniversity.mvp.gpa
 
 import android.content.Context
 
-interface AddGpaView {
+interface GpaView {
     fun showError(errorCode: Int)
     fun hideError()
     fun getContext() : Context

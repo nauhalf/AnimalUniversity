@@ -2,6 +2,9 @@
 <resources>
     <dimen name="img_profile_size">100dp</dimen>
     <dimen name="common_padding">24dp</dimen>
+    <dimen name="material_padding">16dp</dimen>
     <dimen name="ipk_size">24sp</dimen>
-    <dimen name="placeholderTextHeight">8dp</dimen>
+    <dimen name="text_sub_size">13sp</dimen>
+    <dimen name="common_padding_2">15dp</dimen>
+    <dimen name="icon_size">24dp</dimen>
 </resources>
